@@ -15,8 +15,8 @@ class CreateBlogPostsTable extends Migration
     {
         Schema::create('blog_posts', function (Blueprint $table) {
             $table->id();
-            $table->integer('category_id')->unsigned();
-            $table->integer('user_id')->unsigned();
+            $table->foreignId('category_id')->constrained('blog_categories')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->string('slug')->unique();
             $table->string('title');
             $table->text('excerpt')->nullable();
@@ -27,9 +27,11 @@ class CreateBlogPostsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('category_id')->references('id')->on('blog_categories');
             $table->index('is_published');
+
+            // $table->foreign('category_id')->references('id')->on('blog_categories')->onDelete('cascade');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
         });
     }
 
