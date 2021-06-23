@@ -9,14 +9,23 @@
 
 ## Laravel Framework 8.47.0 
 
-## Installation
-
 ```
 	git clone https://github.com/muhammadali8767/afanasiev.git
+```
+
+```
 	cd afanasiev
+```
+```
 	composer install
+```
+```
 	cp .env.example .env
+```
+```
 	php artisan key:generate
+```
+```
 	php artisan migrate --seed
 
 ```
