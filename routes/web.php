@@ -13,6 +13,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
+});
+
+// Front routes
+$groupFront = ['namespace' => 'App\Http\Controllers\Blog', 'prefix' => 'blog'];
+Route::group($groupFront, function ()
+{
+    Route::resource('posts', PostController::class)->names('posts');
+});
+
+// Admin routes
+$groupAdmin = ['namespace' => 'App\Http\Controllers\Blog\Admin', 'prefix' => 'admin/blog'];
+Route::group($groupAdmin, function ()
+{
+    $methods = ['index', 'create', 'store', 'edit', 'update'];
+    Route::resource('catrgories', CategoryController::class)->only($methods)->names('blog.admin.categories');
 });
