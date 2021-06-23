@@ -13,10 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
 
 // Front routes
 $groupFront = ['namespace' => 'App\Http\Controllers\Blog', 'prefix' => 'blog'];
@@ -30,5 +35,5 @@ $groupAdmin = ['namespace' => 'App\Http\Controllers\Blog\Admin', 'prefix' => 'ad
 Route::group($groupAdmin, function ()
 {
     $methods = ['index', 'create', 'store', 'edit', 'update'];
-    Route::resource('catrgories', CategoryController::class)->only($methods)->names('blog.admin.categories');
+    Route::resource('categories', CategoryController::class)->only($methods)->names('blog.admin.categories');
 });
