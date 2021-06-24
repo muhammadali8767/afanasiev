@@ -9,5 +9,10 @@ class BlogCategory extends Model
 {
     use HasFactory;
 
-    protected $fillable = [];
+    protected $fillable = [
+        'title',
+        'slug',
+        'parent_id',
+        'description',
+    ];
 }

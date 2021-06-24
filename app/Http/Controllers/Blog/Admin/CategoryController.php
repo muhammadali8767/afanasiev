@@ -4,6 +4,7 @@ namespace App\Http\Controllers\blog\Admin;
 
 use App\Models\BlogCategory;
 use Illuminate\Http\Request;
+use App\Http\Requests\BlogCategoryUpdateRequest;
 use Illuminate\Pagination\Paginator;
 
 class CategoryController extends BaseController
@@ -65,9 +66,11 @@ class CategoryController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BlogCategoryUpdateRequest $request, $id)
     {
+        dd($request);
         $item = BlogCategory::find($id);
+        
         if(empty($item)) {
             return back()
                 ->withErrors(['msg' => 'not found'])
@@ -75,29 +78,19 @@ class CategoryController extends BaseController
         }
 
         $data = $request->all();
+        
         $result = $item
             ->fill($data)
             ->save();
 
         if ($result) {
             return redirect()
-                ->route('blog.admin.catrgory.edit', $item->id)
+                ->route('blog.admin.categories.edit', $item->id)
                 ->with(['success' => 'Saved']);
         } else {
             return back()
                 ->withErrors(['msg' => 'error saving'])
                 ->withInput();
         }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        dd(__METHOD__);
     }
 }

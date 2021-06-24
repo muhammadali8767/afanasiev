@@ -2,32 +2,25 @@
 @section('content')
 <form action="{{ route('blog.admin.categories.update', $item->id) }}" method="POST">
     @method('PATCH')
+    @csrf
     <div class="container">
 
         @if ($errors->any())
-        <div class="row justify-content-center">
-            <div class="col-md-11">
-                <div class="alert alert-danger" role="alert">
-                    <button type="button" class="close" data-dismis="alert" aria-label="Close">
-                        <span aria-hidden="true">x</span>
-                    </button>
-                    {{ $errors->first() }}
-                </div>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ $errors->first() }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-        </div>
         @endif
 
         @if (session('success'))
-        <div class="row justify-content-center">
-            <div class="col-md-11">
-                <div class="alert alert-success" role="alert">
-                    <button type="button" class="close" data-dismis="alert" aria-label="Close">
-                        <span aria-hidden="true">x</span>
-                    </button>
-                    {{ session()->get('success') }}
-                </div>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session()->get('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-        </div>
         @endif
 
         <div class="row">
@@ -37,18 +30,57 @@
                         <h2 class="d-inline">Categories</h2>
                     </div>
                     <div class="card-body">
-
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input class="form-control" type="text" name="title" required value="{{ old('title', $item->title) }}" />
+                        </div> 
+                        <div class="form-group">
+                            <label>Slug</label>
+                            <input class="form-control" type="text" required name="slug" required value="{{ old('slug', $item->slug) }}" />
+                        </div> 
+                        <div class="form-group">
+                            <label>Parent</label>
+                            <select class="form-control" name="parent_id">
+                                @foreach($categoryList as $category)
+                                    <option value="{{ $category->id }}" {{ ($category->id == $item->parent_id) ? "selected" : "" }}>{{ $category->title }}</option>
+                                @endforeach
+                            </select>
+                        </div> 
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea class="form-control" type="text" name="description">{{ old('description', $item->description) }}</textarea>
+                        </div> 
                     </div>
                 </div>
             </div>
 
             <div class="col-sm-3">
                 <div class="card">
-                    <div class="card-header">
-                        <a class="float-right btn btn-success" href="{{ route('blog.admin.categories.create') }}">Save</a>
-                    </div>
                     <div class="card-body">
-
+                        <button class="float-right btn btn-success" type="submit">Save</button>
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-body">
+                        ID: {{ $item->id }}
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Created at</label>
+                            <input class="form-control" disabled value="{{ $item->created_at }}" />
+                        </div> 
+                        <div class="form-group">
+                            <label>Updated at</label>
+                            <input class="form-control" disabled value="{{ $item->updated_at }}" />
+                        </div> 
+                        <div class="form-group">
+                            <label>Deleted at</label>
+                            <input class="form-control" disabled value="{{ $item->deleted_at }}" />
+                        </div> 
                     </div>
                 </div>
             </div>
