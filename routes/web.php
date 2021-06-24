@@ -16,3 +16,24 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
+
+// Front routes
+$groupFront = ['namespace' => 'App\Http\Controllers\Blog', 'prefix' => 'blog'];
+Route::group($groupFront, function ()
+{
+    Route::resource('posts', PostController::class)->names('posts');
+});
+
+// Admin routes
+$groupAdmin = ['namespace' => 'App\Http\Controllers\Blog\Admin', 'prefix' => 'admin/blog'];
+Route::group($groupAdmin, function ()
+{
+    $methods = ['index', 'create', 'store', 'edit', 'update'];
+    Route::resource('categories', CategoryController::class)->only($methods)->names('blog.admin.categories');
+});
