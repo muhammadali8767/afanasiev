@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\blog\Admin;
-
+use Illuminate\Support\Str;
 use App\Models\BlogCategory;
 use App\Http\Requests\BlogCategoryUpdateRequest;
 use App\Http\Requests\BlogCategoryCreateRequest;
@@ -14,10 +14,10 @@ class CategoryController extends BaseController
      */
     private $blogCategoryRepository;
 
-    public function __construct(BlogCategoryRepository $blogCategoryRepository)
+    public function __construct()
     {
-        // parent::__construct();
-        $this->blogCategoryRepository = $blogCategoryRepository;
+        parent::__construct();
+        $this->blogCategoryRepository = app(BlogCategoryRepository::class);
     }
 
     /**
@@ -27,9 +27,7 @@ class CategoryController extends BaseController
      */
     public function index()
     {
-        // $items = BlogCategory::paginate(5);
         $items = $this->blogCategoryRepository->getAllWithPaginate(5);
-
         return view('blog.admin.categories.index', compact('items'));
     }
 
@@ -41,9 +39,10 @@ class CategoryController extends BaseController
      */
     public function create()
     {
+        $item = new BlogCategory();
         $categoryList = $this->blogCategoryRepository->getForSelect();
 
-        return view('blog.admin.categories.create', compact('categoryList'));
+        return view('blog.admin.categories.edit', compact('item', 'categoryList'));
     }
 
     /**
@@ -57,7 +56,7 @@ class CategoryController extends BaseController
         $data = $request->input();
 
         if (empty($data['slug'])) {
-            $data['slug'] = \Str::slug($data['title']);
+            $data['slug'] = Str::slug($data['title']);
         }
 
         $item = (new BlogCategory())->create($data);
@@ -70,7 +69,6 @@ class CategoryController extends BaseController
                 ->withErrors(['msg' => 'error saving'])
                 ->withInput();
         }
-
     }
 
     /**
@@ -109,7 +107,7 @@ class CategoryController extends BaseController
         $data = $request->all();
 
         if (empty($data['slug'])) {
-            $data['slug'] = \Str::slug($data['title']);
+            $data['slug'] = Str::slug($data['title']);
         }
 
         $result = $item->update($data); // $result = $item->fill($data)->save();
