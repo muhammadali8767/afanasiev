@@ -67,10 +67,6 @@
                 $(".alert").alert('close');
             }, 2000);
         });
-
-        // $('input[type="checkbox"]').on('change', function(){
-        //   this.value = this.checked ? 1 : 0;
-        // }).change();
     </script>
   </body>
 </html>
