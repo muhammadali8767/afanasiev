@@ -25,7 +25,7 @@
                             </tr>
                         @endforeach
                     </table>
-                    @include('blog.admin.categories.includes.category_paginate')
+                    @include('blog.admin.includes.paginate', ['link' => 'blog.admin.categories.index'])
                 </div>
             </div>
         </div>

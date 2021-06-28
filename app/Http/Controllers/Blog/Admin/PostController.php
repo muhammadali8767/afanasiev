@@ -67,22 +67,28 @@ class PostController extends BaseController
      */
     public function store(BlogPostCreateRequest $request)
     {
-        // $data = $request->input();
+        $data = $request->input();
 
-        // if (empty($data['slug'])) {
-        //     $data['slug'] = Str::slug($data['title']);
-        // }
+        if (empty($data['slug'])) {
+            $data['slug'] = Str::slug($data['title']);
+        }
 
-        // $item = (new BlogPost())->create($data);
-        // if ($item) {
-        //     return redirect()
-        //         ->route('blog.admin.posts.edit', $item->id)
-        //         ->with(['success' => 'Saved']);
-        // } else {
-        //     return back()
-        //         ->withErrors(['msg' => 'error saving'])
-        //         ->withInput();
-        // }
+        if ($data['is_published']) {
+            $data['published_at'] = Carbon::now();
+        }
+        $data['user_id'] = 1;
+        $data['content_html'] = '';
+
+        $item = (new BlogPost())->create($data);
+        if ($item) {
+            return redirect()
+                ->route('blog.admin.posts.edit', $item->id)
+                ->with(['success' => 'Saved']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'error saving'])
+                ->withInput();
+        }
 
     }
 
@@ -132,8 +138,6 @@ class PostController extends BaseController
             $data['published_at'] = Carbon::now();
         }
 
-        dd($data);
-
         $result = $item->update($data);
 
         if ($result) {
@@ -155,6 +159,6 @@ class PostController extends BaseController
      */
     public function destroy($id)
     {
-        //
+        dd(__METHOD__);
     }
 }

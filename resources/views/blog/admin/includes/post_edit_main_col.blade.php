@@ -56,20 +56,20 @@
                     </textarea>
                 </div>
                 <div class="form-check">
-                    {{-- <input name="is_published"
+                    <input name="is_published"
                         type="hidden"
                         value="0"
-                    > --}}
+                    >
 
                     <input name="is_published"
                         class="form-check-input"
                         type="checkbox"
-                        value="{{ old('is_published', $item->is_published) }}"
+                        value="1"
                         @if ($item->is_published)
                             checked="checked"
                         @endif
                     >
-                    <label class="form-check-label" for="defaultCheck1">Is published</label>
+                    <label class="form-check-label">Is published</label>
                 </div>
             </div>
         </div>

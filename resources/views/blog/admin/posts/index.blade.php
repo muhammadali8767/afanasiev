@@ -31,7 +31,7 @@
 							</tr>
 						@endforeach
 					</table>
-                    @include('blog.admin.posts.includes.post_paginate')
+                    @include('blog.admin.includes.paginate', ['link' => 'blog.admin.posts.index'])
 				</div>
 			</div>
 		</div>

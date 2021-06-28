@@ -19,9 +19,18 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
+          <li class="nav-item">
             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('blog.admin.categories.index') }}">Categories</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('blog.admin.posts.index') }}">Posts</a>
+          </li>
+
+
+
           <li class="nav-item">
             <a class="nav-link" href="#">Link</a>
           </li>
@@ -35,9 +44,6 @@
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Something else here</a>
             </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
@@ -61,6 +67,10 @@
                 $(".alert").alert('close');
             }, 2000);
         });
+
+        // $('input[type="checkbox"]').on('change', function(){
+        //   this.value = this.checked ? 1 : 0;
+        // }).change();
     </script>
   </body>
 </html>

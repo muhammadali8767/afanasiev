@@ -21,14 +21,18 @@
             <label>Updated at</label>
             <input class="form-control" disabled value="{{ $item->updated_at }}" />
         </div>
+        @if ($item->published_at)
         <div class="form-group">
             <label>Published at</label>
-            <input class="form-control" disabled value="{{ $item->Published_at }}" />
+            <input class="form-control" disabled value="{{ $item->published_at }}" />
         </div>
+        @endif
+        @if ($item->deleted_at)
         <div class="form-group">
             <label>Deleted at</label>
             <input class="form-control" disabled value="{{ $item->deleted_at }}" />
         </div>
+        @endif
     </div>
 </div>
 @endif
