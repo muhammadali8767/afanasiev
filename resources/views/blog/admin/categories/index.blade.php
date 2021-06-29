@@ -13,15 +13,21 @@
                             <thead>
                                 <th>ID</th>
                                 <th>Category Title</th>
-                                <th>Category Slug</th>
                                 <th>Parent ID</th>
                             </thead>
                         @foreach($items as $item)
                             <tr>
                                 <td>{{ $item->id }}</td>
-                                <td><a href="{{ route('blog.admin.categories.edit', $item->id) }}">{{ $item->title }}</a></td>
-                                <td>{{ $item->slug }}</td>
-                                <td>{{ $item->parent_id }}</td>
+                                
+                                <td>
+                                    <a href="{{ route('blog.admin.categories.edit', $item->id) }}">
+                                        {{ $item->title }}
+                                    </a>
+                                </td>
+                                
+                                <td @if(in_array($item->parent_id, [0, 1])) style="color: #ccc" @endif>
+                                    {{ $item->parentTitle }}
+                                </td>
                             </tr>
                         @endforeach
                     </table>

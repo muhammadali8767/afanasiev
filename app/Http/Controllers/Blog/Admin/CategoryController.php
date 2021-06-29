@@ -27,7 +27,8 @@ class CategoryController extends BaseController
      */
     public function index()
     {
-        $items = $this->blogCategoryRepository->getAllWithPaginate(5);
+        $items = $this->blogCategoryRepository->getAllWithPaginate(15);
+        dd($items->first());
         return view('blog.admin.categories.index', compact('items'));
     }
 

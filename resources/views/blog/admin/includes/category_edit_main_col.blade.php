@@ -15,7 +15,7 @@
             <label>Parent</label>
             <select class="form-control" name="parent_id" required>
                 @foreach($categoryList as $category)
-                    <option value="{{ $category->id }}" {{ ($category->id == $item->parent_id) ? "selected" : "" }}>{{ $category->id_title }}</option>
+                    <option value="{{ $category->id }}" {{ ($category->id == old('parent_id', $item->parent_id)) ? "selected" : "" }}>{{ $category->id_title }}</option>
                 @endforeach
             </select>
         </div>
