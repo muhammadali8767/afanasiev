@@ -33,7 +33,10 @@
             </div>
         </div>
     </nav>
-    <div class="container">
+
+    
+    @include('layouts.breadcrumb')
+<!--  -->    <div class="container">
         @yield('content')
     </div>
     <!-- Optional JavaScript -->

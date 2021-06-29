@@ -40,7 +40,7 @@ class BlogCategory extends Model
     {
         $title = $this->parentCategory->title
             ?? ($this->isRoot() 
-            ? 'Корень' 
+            ? 'КОРЕНЬ' 
             : '???');   
         return $title;
     }
