@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\Blog\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\BlogPostCreateRequest;
 use App\Http\Requests\BlogPostUpdateRequest;
 use App\Models\BlogPost;
 use App\Repositories\BlogCategoryRepository;
 use App\Repositories\BlogPostRepository;
-use Carbon\Carbon;
-use Illuminate\Support\Str;
 
 class PostController extends BaseController
 {
@@ -39,7 +36,6 @@ class PostController extends BaseController
     public function index()
     {
         $items = $this->blogPostRepository->getAllWithPaginate(5);
-        // dd($items);
         return view('blog.admin.posts.index', compact('items'));
     }
 
@@ -68,18 +64,8 @@ class PostController extends BaseController
     public function store(BlogPostCreateRequest $request)
     {
         $data = $request->input();
-
-        if (empty($data['slug'])) {
-            $data['slug'] = Str::slug($data['title']);
-        }
-
-        if ($data['is_published']) {
-            $data['published_at'] = Carbon::now();
-        }
-        $data['user_id'] = 1;
-        $data['content_html'] = '';
-
         $item = (new BlogPost())->create($data);
+
         if ($item) {
             return redirect()
                 ->route('blog.admin.posts.edit', $item->id)
@@ -89,7 +75,6 @@ class PostController extends BaseController
                 ->withErrors(['msg' => 'error saving'])
                 ->withInput();
         }
-
     }
 
     /**
@@ -122,22 +107,13 @@ class PostController extends BaseController
     {
         $item = $this->blogPostRepository->getEdit($id);
 
-        if(empty($item)) {
+        if (empty($item)) {
             return back()
                 ->withErrors(['msg' => 'not found'])
                 ->withInput();
         }
 
         $data = $request->all();
-
-        if (empty($data['slug'])) {
-            $data['slug'] = Str::slug($data['title']);
-        }
-
-        if (empty($item->published_at) && $data['is_published']) {
-            $data['published_at'] = Carbon::now();
-        }
-
         $result = $item->update($data);
 
         if ($result) {

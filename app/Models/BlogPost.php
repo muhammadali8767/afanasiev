@@ -10,6 +10,8 @@ class BlogPost extends Model
 {
     use HasFactory, SoftDeletes;
 
+    const FIRST_USER = 1;
+
     protected $fillable = [
         'user_id',
         'category_id',
@@ -27,7 +29,8 @@ class BlogPost extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
@@ -36,7 +39,8 @@ class BlogPost extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function category() {
+    public function category()
+    {
         return $this->belongsTo(BlogCategory::class);
     }
 }
