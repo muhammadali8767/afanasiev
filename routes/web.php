@@ -17,30 +17,36 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth'])->name('dashboard');
+ Route::get('/dashboard', function () {
+     return view('dashboard');
+ })->middleware(['auth'])->name('dashboard');
 
-// require __DIR__.'/auth.php';
+ Route::get('/admin', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('admin');
 
+ require __DIR__.'/auth.php';
+
+//Digging-deeper
+Route::prefix('digging-deeper')->group(function () {
+    Route::get('collections', 'DiggingDeeperController@collections')->name('digging-deeper.collections');
+});
 
 // Front routes
-$groupFront = ['namespace' => 'App\Http\Controllers\Blog', 'prefix' => 'blog'];
+$groupFront = ['namespace' => 'Blog', 'prefix' => 'blog'];
 Route::group($groupFront, function ()
 {
-    Route::resource('posts', PostController::class)->names('posts');
+    Route::resource('posts', PostController::class)->names('posts')->only(['index', 'show']);
 });
 
 // Admin routes
-$groupAdmin = ['namespace' => 'App\Http\Controllers\Blog\Admin', 'prefix' => 'admin/blog'];
+$groupAdmin = ['namespace' => 'Blog\Admin', 'prefix' => 'admin/blog'];
 Route::group($groupAdmin, function ()
 {
     Route::resource('categories', CategoryController::class)
         ->except(['show', 'delete'])
         ->names('blog.admin.categories');
-
-        Route::resource('posts', PostController::class)
+    Route::resource('posts', PostController::class)
         ->except(['show'])
         ->names('blog.admin.posts');
-
     });

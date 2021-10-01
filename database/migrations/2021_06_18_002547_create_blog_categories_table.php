@@ -17,7 +17,7 @@ class CreateBlogCategoriesTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->integer('parent_id')->unsigned()->default(1);
+            $table->integer('parent_id')->unsigned()->default(0);
             $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();

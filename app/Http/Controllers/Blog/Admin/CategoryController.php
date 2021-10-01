@@ -82,6 +82,9 @@ class CategoryController extends BaseController
     public function edit($id)
     {
         $item = $this->blogCategoryRepository->getEdit($id);
+        if (empty($item)) {
+            abort(404);
+        }
         $categoryList = $this->blogCategoryRepository->getForSelect();
 
         return view('blog.admin.categories.edit', compact('item', 'categoryList'));

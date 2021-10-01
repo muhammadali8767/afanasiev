@@ -24,11 +24,18 @@ class BlogPostCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required | min:3 | max:200',
-            'slug' => 'max:200',
+            'title' => 'required | min:3 | max:200 | unique:blog_posts',
+            'slug' => 'max:200 | unique:blog_posts',
             'excerpt' => 'max:500',
             'content_raw' => 'required | string | min:3 | max:10000',
             'category_id' => 'required | integer | exists:blog_categories,id',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'title.required' => 'Введите заголовок статьи'
         ];
     }
 }

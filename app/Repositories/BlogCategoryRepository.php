@@ -36,18 +36,20 @@ class BlogCategoryRepository extends CoreRepository {
      * @return collection
      */
     public function getForSelect() {
-
-        $columns = implode(', ', [
-            'id',
-            'CONCAT (id, ". ", title) AS id_title',
-        ]);
-
+        // Способ 1
         // $result = $this->startConditions()->all();
 
+        // Способ 2
         // $result = $this->startConditions()
         //     ->select('blog_categories.*', DB::raw('CONCAT (id, ". ", title) AS id_title'))
         //     ->toBase()
         //     ->get();
+
+        // Способ 3
+        $columns = implode(', ', [
+            'id',
+            'CONCAT (id, ". ", title) AS id_title',
+        ]);
 
         $result = $this->startConditions()
             ->selectRaw($columns)

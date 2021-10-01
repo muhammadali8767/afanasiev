@@ -15,23 +15,21 @@ class CreateBlogPostsTable extends Migration
     {
         Schema::create('blog_posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained('blog_categories')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->bigInteger('category_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
             $table->string('slug')->unique();
             $table->string('title');
             $table->text('excerpt')->nullable();
-            $table->text('content_raw');
-            $table->text('content_html');
+            $table->text('content_raw')->nullable();
+            $table->text('content_html')->nullable();
             $table->boolean('is_published')->default(false);
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('blog_categories')->onDelete('cascade');
             $table->index('is_published');
-
-            // $table->foreign('category_id')->references('id')->on('blog_categories')->onDelete('cascade');
-            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
         });
     }
 
