@@ -33,14 +33,14 @@ Route::prefix('digging-deeper')->group(function () {
 });
 
 // Front routes
-$groupFront = ['namespace' => 'Blog', 'prefix' => 'blog'];
+$groupFront = ['namespace' => 'Blog', 'prefix' => 'blog', 'middleware' => 'auth'];
 Route::group($groupFront, function ()
 {
     Route::resource('posts', PostController::class)->names('posts')->only(['index', 'show']);
 });
 
 // Admin routes
-$groupAdmin = ['namespace' => 'Blog\Admin', 'prefix' => 'admin/blog'];
+$groupAdmin = ['namespace' => 'Blog\Admin', 'prefix' => 'admin/blog', 'middleware' => 'auth'];
 Route::group($groupAdmin, function ()
 {
     Route::resource('categories', CategoryController::class)

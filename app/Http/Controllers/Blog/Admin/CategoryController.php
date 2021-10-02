@@ -6,6 +6,7 @@ use App\Models\BlogCategory;
 use App\Http\Requests\BlogCategoryUpdateRequest;
 use App\Http\Requests\BlogCategoryCreateRequest;
 use App\Repositories\BlogCategoryRepository;
+use App\Http\Controllers\Blog\Admin\BaseController;
 
 class CategoryController extends BaseController
 {
